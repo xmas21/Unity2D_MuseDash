@@ -7,29 +7,58 @@ public class Player : MonoBehaviour
     [Header("血量"), Range(0, 2000)]
     public float hp = 500;
     [Header("是否在地板上")]
-    public bool isGround = false;
+    public bool isGround;
+    [Header("跳躍音效")]
+    public AudioClip sound_jump;
+    [Header("攻擊音效")]
+    public AudioClip sound_attack;
 
     private int score;
-    private AudioClip sound1;
-    private AudioClip sound2;
     private AudioSource aud;
     private Rigidbody2D rig;
     private Animator ani;
 
-    /// <summary>
-    /// 跳躍
-    /// </summary>
-    private void Jump()
+    private void Start()
     {
-
+        ani = GetComponent<Animator>();
+        rig = GetComponent<Rigidbody2D>();
     }
 
-    /// <summary>
-    /// 攻擊
-    /// </summary>
-    private void Attack()
+    private void Update()
     {
+        Jump();
+        Attack();
+    }
 
+    private void OnCollisionEnter(Collision col)
+    {
+        print(col.gameObject.name);
+    }
+
+    private void Jump()     // 跳躍
+    {
+        if (isGround)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                rig.AddForce(new Vector2(0, jump));
+                isGround = false;
+                ani.SetTrigger("跳躍觸發");
+            }
+        }
+    }
+
+    private void Attack()   // 攻擊
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            ani.SetTrigger("攻擊觸發");
+        }
+    }
+
+    private bool Dead()     // 死亡
+    {
+        return false;
     }
 
     /// <summary>
@@ -42,21 +71,12 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 死亡
-    /// </summary>
-    private bool Dead()
-    {
-        return false;
-    }
-
-    /// <summary>
     /// 加分
     /// </summary>
     /// <param name="add">要加的分數</param>
-    private void AddScore(int add)
+    private void AddScore(int score)
     {
 
     }
 
 }
-
