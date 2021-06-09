@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - "\u5730\u677F"
+  - "\u522A\u9664\u7246"
   layers:
   - Default
   - TransparentFX
@@ -14,9 +15,9 @@ TagManager:
   - UI
   - 
   - 
+  - "\u602A\u7269"
   - 
-  - 
-  - 
+  - "\u5730\u677F"
   - 
   - 
   - 
