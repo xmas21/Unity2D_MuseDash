@@ -6,6 +6,10 @@ TagManager:
   tags:
   - "\u5730\u677F"
   - "\u522A\u9664\u7246"
+  - "\u4E3B\u89D2\u653B\u64CA\u78B0\u649E"
+  - "\u6575\u4EBA"
+  - "\u4E3B\u89D2"
+  - "\u7D50\u675F\u7246"
   layers:
   - Default
   - TransparentFX
@@ -42,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer
+    uniqueID: 884264369
     locked: 0

@@ -39,16 +39,6 @@ public class MusicControl : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 調整音量
-    /// </summary>
-    /// <param name="newVolume">音量數值</param>
-    public void VolumeChanged(float newVolume)
-    {
-        aud.volume = newVolume;
-        isMute = false;
-    }
-
     public void MuteClick()  // 靜音按鈕
     {
         isMute = !isMute;
@@ -61,5 +51,15 @@ public class MusicControl : MonoBehaviour
         {
             aud.volume = preVolume;
         }
+    }
+
+    /// <summary>
+    /// 調整音量
+    /// </summary>
+    /// <param name="newVolume">音量數值</param>
+    public void VolumeChanged(float newVolume)
+    {
+        aud.volume = newVolume;
+        isMute = false;
     }
 }

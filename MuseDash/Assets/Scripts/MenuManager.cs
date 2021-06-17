@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
 
     private void ClickBtn() // 點擊按鈕
     {
-        enterBtn.onClick.AddListener(LateStartGame);
+        enterBtn.onClick.AddListener(StartGame);
         exitBtn.onClick.AddListener(ExitGame);
         setBtn.onClick.AddListener(ShowSet);
 
@@ -38,11 +38,6 @@ public class MenuManager : MonoBehaviour
     private void StartGame() // 開始遊戲
     {
         SceneManager.LoadScene("遊戲場景");
-    }
-
-    private void LateStartGame() // 延遲開啟遊戲
-    {
-        Invoke("StartGame", 2f);
     }
 
     private void ExitGame() // 退出遊戲

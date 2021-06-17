@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -6,37 +7,54 @@ public class Player : MonoBehaviour
     public int jump = 100;
     [Header("血量"), Range(0, 2000)]
     public float hp = 500;
-    [Header("是否在地板上")]
-    public bool isGround = false;
+    [Header("最大血量"), Range(0, 2000)]
+    public float hp_Max = 500;
     [Header("檢查地板的半徑"), Range(0.1f, 1f)]
     public float groundRadius = 0.5f;
+    [Header("是否在地板上")]
+    public bool isGround = false;
     [Header("檢查地板的位移")]
     public Vector3 groundOffset;
     [Header("跳躍音效")]
     public AudioClip soundJump;
     [Header("攻擊音效")]
     public AudioClip soundAttack;
+    [Header("死亡畫面")]
+    public GameObject dead_Panel;
+    [Header("死亡區塊文字")]
+    public Text title_Text;
+    [Header("分數文字")]
+    public Text Endscore_Text;
 
-    private int score; // 分數
+    private int score;            // 分數
+
+    private Image hp_Bar;         // 血條
+    private Text score_Text;      // 分數文字
+    private GameObject jump_ps;   // 跳躍粒子
     private AudioSource aud;
     private Rigidbody2D rig;
     private Animator ani;
-    private GameObject jump_ps;
+    private MusicManager music;
 
     private void Start()
     {
-        // 動畫元件 = 取得元件<泛型>()；
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody2D>();
         aud = GetComponent<AudioSource>();
 
+        music = FindObjectOfType<MusicManager>();
         jump_ps = GameObject.Find("跑步效果");
+        hp_Bar = GameObject.Find("血條上").GetComponent<Image>();
+        score_Text = GameObject.Find("分數數值").GetComponent<Text>();
+
+        hp = hp_Max;
     }
 
     private void Update()
     {
         Move();
         Attack();
+        UpdateScore();
     }
 
     private void OnDrawGizmos()
@@ -45,7 +63,35 @@ public class Player : MonoBehaviour
         Gizmos.DrawSphere(transform.position + groundOffset, groundRadius);
     }
 
-    private void Move() // 跳躍
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "結束牆")
+        {
+            Time.timeScale = 0;
+            title_Text.text = "你獲勝了";
+            Endscore_Text.text = score.ToString("F0");
+            music.aud.Stop();
+            dead_Panel.SetActive(true);
+        }
+    }
+
+    public void AddScore()     // 加分
+    {
+        score += 100;
+    }
+
+    public void Hit()          // 受傷
+    {
+        hp -= 100;
+        hp_Bar.fillAmount = hp / hp_Max;
+
+        if (hp <= 0)
+        {
+            Dead();
+        }
+    }
+
+    private void Move()        // 跳躍
     {
         Collider2D col = Physics2D.OverlapCircle(transform.position + groundOffset, groundRadius, 1 << 10);
 
@@ -82,7 +128,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attack() // 攻擊
+    private void Attack()      // 攻擊
     {
         if (Input.GetKeyDown(KeyCode.Keypad5))
         {
@@ -91,26 +137,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool Dead() // 死亡
+    private void Dead()        // 死亡
     {
-        return false;
+        Time.timeScale = 0;
+        title_Text.text = "你死亡了";
+        Endscore_Text.text = score.ToString("F0");
+        music.aud.Stop();
+        dead_Panel.SetActive(true);
     }
 
-    /// <summary>
-    /// 受傷
-    /// </summary>
-    /// <param name="damage">傷害</param>
-    private void Hit(float damage)
+    private void UpdateScore() // 更新分數
     {
-
-    }
-
-    /// <summary>
-    /// 加分
-    /// </summary>
-    /// <param name="add">分數</param>
-    private void AddScore(int score)
-    {
-
+        score_Text.text = score.ToString("F0");
     }
 }

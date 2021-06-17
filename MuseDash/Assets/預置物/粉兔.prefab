@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5143533333273371170}
   m_Layer: 8
   m_Name: "\u7C89\u5154"
-  m_TagString: Untagged
+  m_TagString: "\u6575\u4EBA"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,8 +98,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00000023841858, y: -0.09085941}
-  m_Size: {x: 1.3314772, y: 2.2400703}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.3, y: 0.6}
   m_Direction: 0
 --- !u!50 &1790085222897039374
 Rigidbody2D:
